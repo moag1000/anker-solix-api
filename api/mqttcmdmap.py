@@ -781,8 +781,9 @@ CMD_SB_USAGE_MODE = (
         # Verified on A17C1 (SB2 Pro, FW 1.0.6.10) via mqtt_monitor 2026-03-25:
         # Mode 1 (SmartHome) and Mode 3 (Volleinspeisung) observed via iOS app.
         # For modes 1+3, a3 was always 1 (possibly schedule_enabled), followed by 7 weekday schedule slots (a4-be).
-        # Each slot is 8 bytes LE: start_min(2B):end_min(2B):home_load_W(2B):soc_reserve_%(2B)
-        # Example observed: 00:00-24:00, 220W, 80% SOC = 00:00:a0:05:dc:00:50:00
+        # Each slot is 8 bytes LE: start_min(2B):end_min(2B):home_load_W(2B):charge_priority(2B)
+        # Example observed: 00:00-24:00, 220W, charge_priority=80 = 00:00:a0:05:dc:00:50:00
+        # Note: charge_priority matches API schedule field "charge_priority":80 (not SOC reserve)
         # Mode switch 1->3: load changed from 140W to 220W. Mode switch 3->1: back to 140W.
         # Schedule update within mode 1: load changed from 140W to 90W without mode change.
         # Note: a3 may behave differently for other modes (e.g. use_time, time_slot).
